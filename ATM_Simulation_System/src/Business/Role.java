@@ -15,12 +15,8 @@ public abstract class Role {
     public Integer getID(){
         return this.ID;
     }
-    public boolean setPWD(String pwd){
+    public boolean updatePWD(String pwd, String new_pwd){
         // upload the pwd to database
         return true;
-    }
-    public Role login(String pwd){
-        // invoke the login_verify in System.class
-        return this;
     }
 }
