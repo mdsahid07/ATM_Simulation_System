@@ -13,7 +13,7 @@ public class System {
     }
     public Role VerifyLogin(String username, String password) {
         // If user is invalid than return null
-        if(/*type*/"" == "Admin"){
+        if(/*type*/"".equals(ROLE_TYPE.ADMIN)){
             role = new Admin("Admin");
         }
         else{
