@@ -1,17 +1,35 @@
 package Business;
 
+import Data_Access.MainDAL;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.sql.ResultSet;
 
 public class User extends Role{
     private ROLE_TYPE type;
     private List<Account> account_list;
-    User(String name){
-        super(name);
+    User(String name,Integer ID){
+        super(name,ID);
         this.type = ROLE_TYPE.USER;
     }
 
     
-//    public List<Account> getAccount(){
-//
-//    }
+    public List<Account> getAccount() throws SQLException {
+        List<Account> list = new ArrayList<>();
+        ResultSet query =  MainDAL.read("Select * from Account");
+
+        while(query.next()){
+            list.add(new Account(new User(query.getString("Name"),query.getInt("user_id"))
+                    ,query.getInt("AccNumber")));
+        }
+        return list;
+    }
+    @Override
+    public String toString(){
+        String str = "";
+        str += "Id:" + this.getID() + " Name:" +this.getName() + " Type:" + this.type;
+        return str;
+    }
 }
