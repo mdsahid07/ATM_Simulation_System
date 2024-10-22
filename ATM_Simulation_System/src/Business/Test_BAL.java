@@ -5,6 +5,12 @@ public class Test_BAL {
         SystemModel m=new SystemModel();
         Role r=m.VerifyLogin("Shiqi","123456");
 
-        System.out.println(r);
+        if(r!=null){
+            System.out.println(r.getType());
+        }
+        else{
+            System.out.println("Invalid Username or Password");
+        }
+
     }
 }
