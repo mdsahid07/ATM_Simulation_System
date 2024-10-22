@@ -15,6 +15,8 @@ public class MainDAL {
 
             while (query.next()) {
                 System.out.println(query.getString("name"));
+
+
             }
 
         } catch (SQLException e) {
