@@ -1,10 +1,8 @@
 package Business;
 
 public class Admin extends Role{
-    private ROLE_TYPE type;
-    Admin(String name){
-        super(name);
-        this.type = ROLE_TYPE.ADMIN;
+    Admin(String name,Integer ID){
+        super(name,ID,ROLE_TYPE.ADMIN);
     }
     public boolean delete_account(Integer ID){
            return true;

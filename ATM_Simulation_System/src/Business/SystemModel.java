@@ -8,11 +8,10 @@ public class SystemModel {
     public List<Role> roles;
     public Role role;
 
-    SystemModel() {
+    SystemModel(){
         roles = new ArrayList<Role>();
         role = null;
     }
-
     public Role VerifyLogin(String username, String password) {
         // If user is invalid than return null
         boolean isValidUser = false;
@@ -36,15 +35,13 @@ public class SystemModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if (isValidUser) {
-            System.out.println(userTypeStr.toUpperCase().trim());
-            System.out.println(ROLE_TYPE.ADMIN);
-            if (userTypeStr.toUpperCase().trim().equals(ROLE_TYPE.ADMIN.toString())) {
-                role = new Admin("Admin");
-            } else {
-                role = new User("User");
-            }
+
+        if(/*type*/"".equals(ROLE_TYPE.ADMIN)){
+            role = new Admin("Admin",1);
         }
-        return role;
+        else{
+            role = new User("User",2);
+        }
+       return role;
     }
 }
