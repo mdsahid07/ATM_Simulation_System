@@ -1,5 +1,7 @@
 package Business;
 
+import java.util.List;
+
 public class User extends Role{
     private ROLE_TYPE type;
     private List<Account> account_list;
