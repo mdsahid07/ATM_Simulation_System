@@ -29,10 +29,10 @@ public class SystemModel {
         }
 
         if(/*type*/"".equals(ROLE_TYPE.ADMIN)){
-            role = new Admin("Admin");
+            role = new Admin("Admin",1);
         }
         else{
-            role = new User("User");
+            role = new User("User",2);
         }
        return role;
     }
