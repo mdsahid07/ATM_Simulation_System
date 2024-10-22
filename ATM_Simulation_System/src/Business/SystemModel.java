@@ -8,7 +8,7 @@ public class SystemModel {
     public List<Role> roles;
     public Role role;
 
-    SystemModel() {
+    public SystemModel() {
         roles = new ArrayList<Role>();
         role = null;
     }

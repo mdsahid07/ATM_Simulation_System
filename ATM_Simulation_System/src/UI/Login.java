@@ -1,5 +1,7 @@
 package UI;
 
+import Business.SystemModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,15 +29,21 @@ public class Login extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SystemModel sm=new SystemModel();
                 // Read the Username and Password
                 String username = uname.getText();
                 char[] pwd = password.getPassword();
+                String passwordStr=new String(pwd);
                 // Perform validation
                 if (username.isEmpty() || pwd.length==0) {
                     JOptionPane.showMessageDialog(null, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
+                } else if (sm.VerifyLogin(username,passwordStr) !=null) {
                     JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
+                }
+//                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
+//                    JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                }
+                else {
                     JOptionPane.showMessageDialog(null, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
