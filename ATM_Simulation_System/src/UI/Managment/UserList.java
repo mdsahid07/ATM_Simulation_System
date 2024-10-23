@@ -121,7 +121,7 @@ public class UserList extends JFrame{
         for(int i=0; i< list.size(); i++){
             data[i][0] = list.get(i).getAccountNumber();
             data[i][1] = list.get(i).getUser().getName();
-            data[i][2] = list.get(i).getBalance();
+            data[i][2] = list.get(i).getBalanceDefault();
             data[i][3] = list.get(i).address;
             data[i][4] = list.get(i).phone;
         }

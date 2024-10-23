@@ -1,7 +1,11 @@
 package Business;
 
 import Data_Access.MainDAL;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.*;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,11 +108,33 @@ public class Account {
     public int getAccountNumber(){
         return this.accountNumber;
     }
-    public double getBalance(){
+    public double getBalanceDefault(){
         return this.balance;
     }
     public User getUser(){
         return this.holderName;
     }
-    
+
+    public static double getBalance() {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
+            Statement statement = con.createStatement();
+            int userId = 0;
+            ResultSet query = statement.executeQuery("Select * from LoginSession");
+            while (query.next()) {
+                userId = query.getInt("UserId");
+            }
+            double totalBalance=0;
+            ResultSet query2 = statement.executeQuery("Select * from Account where UserId = " + userId);
+            while (query2.next()) {
+                totalBalance = query2.getDouble("Balance");
+            }
+            return totalBalance;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
