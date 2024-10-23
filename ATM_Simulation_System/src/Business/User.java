@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 public class User extends Role{
     private List<Account> account_list;
-    User(String name,Integer ID){
+    public User(String name,Integer ID){
         super(name,ID,ROLE_TYPE.USER);
     }
 

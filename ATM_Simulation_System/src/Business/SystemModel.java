@@ -35,6 +35,12 @@ public class SystemModel {
 
                     break;
                 }
+                if (username.equals(name) && password.equals(pwd) && userType.toUpperCase().equals("USER")) {
+                    isValidUser = true;
+                    userTypeStr = userType;
+
+                    break;
+                }
             }
 
         } catch (SQLException e) {

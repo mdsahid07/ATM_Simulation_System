@@ -3,6 +3,8 @@ package Business;
 public class SessionManager {
     private static SessionManager instance;
     private String username;
+    private int accountNumber;
+
 
     private SessionManager() {}
 
@@ -20,4 +22,14 @@ public class SessionManager {
     public String getUsername() {
         return username;
     }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 }
+
+
