@@ -1,12 +1,15 @@
 package Business;
 
+import Data_Access.MainDAL;
+import UI.Managment.UserList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SystemModel {
     public List<Role> roles;
-    public Role role;
+    public static Role role;
 
     public SystemModel() {
         roles = new ArrayList<Role>();
@@ -26,7 +29,7 @@ public class SystemModel {
                 String name = query.getString("name"); // Column "name" (String)
                 String pwd = query.getString("password");
                 String userType = query.getString("userType");
-                if (username.equals(name) && password.equals(pwd) && userType.equals("Admin")) {
+                if (username.equals(name) && password.equals(pwd) && userType.toUpperCase().equals("ADMIN")) {
                     isValidUser = true;
                     userTypeStr = userType;
 
@@ -51,5 +54,17 @@ public class SystemModel {
 
         }
         return role;
+    }
+    public static List<User> getUserList() {
+        try {
+            List<User> list = new ArrayList<>();
+            ResultSet query = MainDAL.read("Select * from User");
+            while (query.next()) {
+                list.add(new User(query.getString("name"), query.getInt("Id")));
+            }
+            return list;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }
