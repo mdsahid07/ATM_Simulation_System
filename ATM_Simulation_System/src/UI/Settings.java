@@ -1,5 +1,6 @@
 package UI;
 
+import Business.AccountOperations;
 import Business.SessionManager;
 import Business.SystemModel;
 
@@ -9,9 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Settings extends JFrame {
-    private JTextField uname;
+    private JPasswordField newPin;
     private JButton submit;
-    private JPasswordField password;
+    private JPasswordField confirmPin;
     private JPanel mypanel;
     private String userName;
 
@@ -32,22 +33,27 @@ public class Settings extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SystemModel sm = new SystemModel();
+                AccountOperations ao = new AccountOperations();
                 // Read the Username and Password
-                String username = uname.getText();
-                char[] pwd = password.getPassword();
-                String passwordStr = new String(pwd);
+
+                char[] newPin1 = newPin.getPassword();
+                char[] conPin=confirmPin.getPassword();
+                String newPinStr = new String(newPin1);
+                String conPinStr = new String(conPin);
                 // Perform validation
-                if (username.isEmpty() || pwd.length == 0) {
-                    JOptionPane.showMessageDialog(null, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (sm.VerifyLogin(username, passwordStr) != null) {
-                    JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                if (newPinStr.isEmpty() || conPinStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter pin on both field", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (!newPinStr.equals(conPinStr)) {
+                    JOptionPane.showMessageDialog(null, "Confirm Pin does not match", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-//                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
-//                    JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-//                }
+                else if (newPinStr.length() !=4) {
+                    JOptionPane.showMessageDialog(null, "Pin must be 4 character", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (ao.changePin(newPinStr, conPinStr)) {
+                    JOptionPane.showMessageDialog(null, "Pin changed successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
                 else {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

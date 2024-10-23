@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class Login extends JFrame {
     private JTextField uname;
@@ -29,15 +28,15 @@ public class Login extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SystemModel sm=new SystemModel();
+                SystemModel sm = new SystemModel();
                 // Read the Username and Password
                 String username = uname.getText();
                 char[] pwd = password.getPassword();
-                String passwordStr=new String(pwd);
+                String passwordStr = new String(pwd);
                 // Perform validation
-                if (username.isEmpty() || pwd.length==0) {
+                if (username.isEmpty() || pwd.length == 0) {
                     JOptionPane.showMessageDialog(null, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (sm.VerifyLogin(username,passwordStr) !=null) {
+                } else if (sm.VerifyLogin(username, passwordStr) != null) {
                     JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     new MainWindow();
                     dispose();
@@ -51,6 +50,7 @@ public class Login extends JFrame {
             }
         });
     }
+
     public static void main(String[] args) {
         /*
         While it is not mandatory to use EventQueue.invokeLater,
