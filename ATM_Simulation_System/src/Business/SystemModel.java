@@ -32,6 +32,7 @@ public class SystemModel {
                 if (username.equals(name) && password.equals(pwd) && userType.toUpperCase().equals("ADMIN")) {
                     isValidUser = true;
                     userTypeStr = userType;
+
                     break;
                 }
             }
@@ -46,6 +47,11 @@ public class SystemModel {
             } else {
                 role = new User("User", 2);
             }
+
+            //Manage the session
+            SessionManager.getInstance().setUsername(username);
+
+
         }
         return role;
     }
