@@ -37,8 +37,8 @@ public class MainWindow extends JFrame {
         withdrawCashButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// Create a new instance of the other form here
-
+                Withdraw settings = new Withdraw();
+                settings.setVisible(true);
                 dispose();
             }
         });
