@@ -38,6 +38,7 @@ public class Login extends JFrame {
                     JOptionPane.showMessageDialog(null, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
                 } else if (sm.VerifyLogin(username, passwordStr) != null) {
                     JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    new MainWindow();
                 }
 //                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
 //                    JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
