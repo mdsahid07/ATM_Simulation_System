@@ -14,12 +14,17 @@ public class Account {
 
     private double balance;
     private String pin;
-    private User holderName;
+    public User holderName;
     private List<Transcation> transactions;
+    public String address;
+    public String phone;
 
-    public Account(User holderName , int accountNumber) {
+    public Account(User holderName , int accountNumber,double balance,String address,String phone) {
         this.accountNumber = accountNumber;
         this.holderName = holderName;
+        this.address = address;
+        this.phone = phone;
+        this.balance = balance;
     }
 
 
@@ -96,6 +101,14 @@ public class Account {
         Transcation trans = new Transcation(this, type,amount);
         transactions.add(trans);
     }
-
+    public int getAccountNumber(){
+        return this.accountNumber;
+    }
+    public double getBalance(){
+        return this.balance;
+    }
+    public User getUser(){
+        return this.holderName;
+    }
     
 }

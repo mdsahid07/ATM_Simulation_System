@@ -1,6 +1,9 @@
 package UI;
 
+import Business.ROLE_TYPE;
+import Business.Role;
 import Business.SystemModel;
+import UI.Managment.OptionsPage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +40,13 @@ public class Login extends JFrame {
                 if (username.isEmpty() || pwd.length == 0) {
                     JOptionPane.showMessageDialog(null, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
                 } else if (sm.VerifyLogin(username, passwordStr) != null) {
+                    Role role = sm.VerifyLogin(username, passwordStr);
                     JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    new MainWindow();
+                    if(role.getType() == ROLE_TYPE.ADMIN){
+                        new OptionsPage();
+                    }else{
+                        new MainWindow();
+                    }
                 }
 //                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
 //                    JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);

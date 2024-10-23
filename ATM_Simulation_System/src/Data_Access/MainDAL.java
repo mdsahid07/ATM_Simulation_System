@@ -57,4 +57,17 @@ public class MainDAL {
             return false;
         }
     }
+    public static int getLastInsertId() {
+        try {
+            ResultSet rs = read("SELECT LAST_INSERT_ID();");
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return -1;  // Return -1 or handle the error case appropriately
+        }catch(SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 }

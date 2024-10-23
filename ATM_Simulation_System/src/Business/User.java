@@ -14,16 +14,16 @@ public class User extends Role{
     }
 
     
-    public List<Account> getAccount() throws SQLException {
-        List<Account> list = new ArrayList<>();
-        ResultSet query =  MainDAL.read("Select * from Account Where UserId=" + this.getID());
-
-        while(query.next()){
-            list.add(new Account(new User(query.getString("Name"),query.getInt("user_id"))
-                    ,query.getInt("AccNumber")));
-        }
-        return list;
-    }
+//    public List<Account> getAccount() throws SQLException {
+//        List<Account> list = new ArrayList<>();
+//        ResultSet query =  MainDAL.read("Select * from Account Where UserId=" + this.getID());
+//
+//        while(query.next()){
+//            list.add(new Account(new User(query.getString("Name"),query.getInt("user_id"))
+//                    ,query.getInt("AccNumber")));
+//        }
+//        return list;
+//    }
     @Override
     public String toString(){
         String str = "";

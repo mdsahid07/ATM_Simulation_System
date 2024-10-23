@@ -79,15 +79,30 @@ public class SystemModel {
             throw new RuntimeException(e);
         }
     }
-    public static List<Object []> getAccountList(){
+    public static List<Account> getAccountList(){
         try {
-            List<Object[]> list = new ArrayList<>();
+            List<Account> list = new ArrayList<>();
             ResultSet query = MainDAL.read(String.format("Select * from Account"));
             while (query.next()) {
+                User user = new User(query.getString("name"),query.getInt("UserId"));
+                list.add(new Account(user,query.getInt("AccNumber"), query.getDouble("Balance"),query.getString("Address"),query.getString("Phone")));
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static List<Object []> getTransactions(){
+        try {
+            List<Object[]> list = new ArrayList<>();
+            ResultSet query = MainDAL.read(String.format("Select * from Transaction"));
+            while (query.next()) {
                 Object[] row = new Object[3];
-                row[0] = query.getInt("AccNumber");
-                row[1] = query.getDouble("Balance");
-                row[2] = query.getString("Name");
+                row[0] = query.getInt("Id");
+                row[1] = query.getString("TransactionType");
+                row[2] = query.getDate("Date");
+                row[3] = query.getDouble("Amount");
+//                row[]
                 list.add(row);
             }
             return list;

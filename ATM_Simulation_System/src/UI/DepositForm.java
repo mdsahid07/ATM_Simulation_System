@@ -80,7 +80,7 @@ public class DepositForm extends JFrame {
 
         if (acc==accountNo) {
             User user = new User(name, Integer.valueOf(id));
-            Account account = new Account(user, accountNo);
+            Account account = new Account(user, accountNo,0,"","");
             account.deposit(amount);
         }
 
