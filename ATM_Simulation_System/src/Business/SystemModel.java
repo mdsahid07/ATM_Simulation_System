@@ -39,7 +39,7 @@ public class SystemModel {
                 if (username.equals(name) && password.equals(pwd) && userType.toUpperCase().equals("USER")) {
                     isValidUser = true;
                     userTypeStr = userType;
-
+                    userId = query.getInt("Id");
                     break;
                 }
             }
