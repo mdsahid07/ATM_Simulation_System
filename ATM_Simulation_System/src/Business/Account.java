@@ -5,6 +5,7 @@ import Data_Access.MainDAL;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,10 @@ public class Account {
     }
 
 
-    public void deposit(double amount) throws SQLException {
+    public boolean deposit(double amount) throws SQLException {
+        boolean deposited = false;
         this.balance += amount;
-        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER=="+this.accountNumber; // Change to your table and columns
+        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER="+this.accountNumber; // Change to your table and columns
         ResultSet reslut = MainDAL.read(sql);
         double lastBalance = 0.0;
         if (reslut.next())
@@ -56,12 +58,21 @@ public class Account {
 
         lastBalance +=  this.balance;
 
-        sql = "UPDATE account SET Balance = "+lastBalance+ "WHERE ACCNUMBER=="+this.accountNumber; // Change to your table and columns
-        if (MainDAL.write(sql))
-            JOptionPane.showMessageDialog(null, "Money is successful deposited");
+        sql = "UPDATE account SET Balance = "+lastBalance+ "WHERE ACCNUMBER="+this.accountNumber; // Change to your table and columns
+        if (MainDAL.write(sql)) {
+            JOptionPane.showMessageDialog(null, "Money is deposited successfully");
+            sql = "INSERT INTO transaction (Amount, SenderAcc, TransactionType)" + "VALUES (" + amount + "," + this.accountNumber + ",'" + TransactionType.DEPOSITE.toString() + "')";
+            if (MainDAL.write(sql))
+                JOptionPane.showMessageDialog(null, "Transaction is add successfully");
+            deposited = true;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Failed to deposite!");
+        }
 
         addTransaction( TransactionType.DEPOSITE, amount);
 
+        return deposited;
     }
 
     public void cahngePin(String pin) {

@@ -1,7 +1,6 @@
 package UI;
 
 import Business.Account;
-import Business.SessionManager;
 import Business.User;
 import Data_Access.MainDAL;
 
@@ -9,21 +8,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import static javax.swing.UIManager.getString;
-
-public class DepositForm extends JFrame {
+public class TransferForm extends JFrame{
     private JPanel MainPanel;
-    private JTextField accountTextField;
+    private JTextField ToAccountTextField;
+    private JTextField FromAccountTextField;
     private JTextField amountTextField;
-    private JButton depositButton;
-    private JButton cancelButton;
-    private JLabel accountLabel;
-    private JLabel amountLabel;
+    private JButton transferButton;
 
-
-    public DepositForm() {
+    public TransferForm() {
         setContentPane(MainPanel);
         setTitle("Deposit Form");
         setSize(500, 500);
@@ -32,43 +28,32 @@ public class DepositForm extends JFrame {
         setSize(400, 400);
         setLocationRelativeTo(null);
         setVisible(true);
-
-
-        // Add action listener for the add button
-        depositButton.addActionListener(new ActionListener() {
+        transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    makeDeposit();
+                    makeTransfer();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
+    }
 
-        // Add action listener for the back button
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.setVisible(true);
-                dispose(); // Close this window
-            }
-        });
-
-
+    public static void main(String[] args) {
+        new TransferForm();
     }
 
 
-
-
-    private void makeDeposit() throws SQLException {
-        int accountNo;
+    private void makeTransfer() throws SQLException {
+        int fromAccountNo;
+        int toAccountNo;
         double amount;
 
         try {
-            accountNo = Integer.parseInt(accountTextField.getText());
-             amount = Double.parseDouble(amountTextField.getText());
+            fromAccountNo = Integer.parseInt(accountTextField.getText());
+            toAccountNo = Integer.parseInt(accountTextField.getText());
+            amount = Double.parseDouble(amountTextField.getText());
             if (amount<=0)
             {
                 JOptionPane.showMessageDialog(null, "The amount must be greater than zero");
@@ -115,14 +100,6 @@ public class DepositForm extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Account number does not match.");
         }
-    }
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            DepositForm form = new DepositForm();
-            form.setVisible(true);
-        });
     }
 
 
