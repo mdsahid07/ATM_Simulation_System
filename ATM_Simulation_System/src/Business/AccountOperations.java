@@ -16,13 +16,13 @@ public class AccountOperations {
             while (query.next()) {
                 userId = query.getInt("UserId");
             }
-            int accNumber=0;
+            /*int accNumber=0;
             ResultSet query2 = statement.executeQuery("Select * from Account where UserId = " + userId);
             while (query2.next()) {
                 accNumber = query2.getInt("AccNumber");
-            }
-            String ss = "Update Account set Pin = '" + newPin + "' where AccNumber = " + accNumber + "";
-            boolean updateAcc = statement.execute("Update Account set Pin = '" + newPin + "' where AccNumber = " + accNumber + "");
+            }*/
+            String ss = "Update User set Password = '" + newPin + "' where Id = " + userId + "";
+            boolean updateAcc = statement.execute("Update User set Password = '" + newPin + "' where Id = " + userId + "");
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);

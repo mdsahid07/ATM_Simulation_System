@@ -3,8 +3,7 @@ package Business;
 import Data_Access.MainDAL;
 
 import javax.swing.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +94,27 @@ public class Account {
 
         Transcation trans = new Transcation(this, type,amount);
         transactions.add(trans);
+    }
+
+    public static double getBalance() {
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
+            Statement statement = con.createStatement();
+            int userId = 0;
+            ResultSet query = statement.executeQuery("Select * from LoginSession");
+            while (query.next()) {
+                userId = query.getInt("UserId");
+            }
+            double totalBalance=0;
+            ResultSet query2 = statement.executeQuery("Select * from Account where UserId = " + userId);
+            while (query2.next()) {
+                totalBalance = query2.getDouble("Balance");
+            }
+            return totalBalance;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     

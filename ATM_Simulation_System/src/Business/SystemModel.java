@@ -3,13 +3,12 @@ package Business;
 import Data_Access.MainDAL;
 
 import java.sql.*;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SystemModel {
     public List<Role> roles;
-    public static Role role = new Admin("ADMIN",1);
+    public static Role role = new Admin("ADMIN", 1);
 
     public SystemModel() {
         roles = new ArrayList<Role>();
@@ -20,7 +19,7 @@ public class SystemModel {
         // If user is invalid than return null
         boolean isValidUser = false;
         String userTypeStr = "";
-        int userId=0;
+        int userId = 0;
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
             Statement statement = con.createStatement();
@@ -63,14 +62,34 @@ public class SystemModel {
         return role;
     }
 
+    public static boolean Log_Out() {
+        try {
+
+            ResultSet query = MainDAL.read("Select * from LoginSession");
+            while (query.next()) {
+                MainDAL.write("Delete from LoginSession Where UserId=" + query.getInt("UserId"));
+            }
+            return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void addSession(int userId) {
+
+
+//        ResultSet query = MainDAL.read(String.format("Select * from LoginSession"));
+//        while (query.next()) {
+//            userId = query.getInt("UserId");
+//        }
         MainDAL.write(String.format("Insert into LoginSession (UserId) Values ('%d')", userId));
     }
 
     public static List<User> getUserList() {
         try {
             List<User> list = new ArrayList<>();
-            ResultSet query = MainDAL.read(String.format("Select * from User Where UserType='%s'",ROLE_TYPE.USER.toString()));
+            ResultSet query = MainDAL.read(String.format("Select * from User Where UserType='%s'", ROLE_TYPE.USER.toString()));
             while (query.next()) {
                 list.add(new User(query.getString("name"), query.getInt("Id")));
             }
@@ -79,7 +98,8 @@ public class SystemModel {
             throw new RuntimeException(e);
         }
     }
-    public static List<Object []> getAccountList(){
+
+    public static List<Object[]> getAccountList() {
         try {
             List<Object[]> list = new ArrayList<>();
             ResultSet query = MainDAL.read(String.format("Select * from Account"));
@@ -91,7 +111,7 @@ public class SystemModel {
                 list.add(row);
             }
             return list;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
