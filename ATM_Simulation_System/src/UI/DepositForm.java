@@ -25,6 +25,8 @@ public class DepositForm extends JFrame {
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(4, 2));
+        setSize(400, 400);
+        setLocationRelativeTo(null);
 
 
         // Add action listener for the add button
@@ -39,6 +41,8 @@ public class DepositForm extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.setVisible(true);
                 dispose(); // Close this window
             }
         });
