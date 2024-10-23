@@ -54,6 +54,7 @@
         </constraints>
         <properties>
           <font size="16"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="ac8e9" class="javax.swing.JLabel">
