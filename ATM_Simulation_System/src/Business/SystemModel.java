@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SystemModel {
     public List<Role> roles;
-    public static Role role;
+    public static Role role = new Admin("ADMIN",1);
 
     public SystemModel() {
         roles = new ArrayList<Role>();
@@ -64,7 +64,7 @@ public class SystemModel {
     public static List<User> getUserList() {
         try {
             List<User> list = new ArrayList<>();
-            ResultSet query = MainDAL.read("Select * from User");
+            ResultSet query = MainDAL.read(String.format("Select * from User Where UserType='%s'",ROLE_TYPE.USER.toString()));
             while (query.next()) {
                 list.add(new User(query.getString("name"), query.getInt("Id")));
             }
@@ -72,5 +72,22 @@ public class SystemModel {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+    public static List<Object []> getAccountList(){
+        try {
+            List<Object[]> list = new ArrayList<>();
+            ResultSet query = MainDAL.read(String.format("Select * from Account"));
+            while (query.next()) {
+                Object[] row = new Object[3];
+                row[0] = query.getInt("AccNumber");
+                row[1] = query.getDouble("Balance");
+                row[2] = query.getString("Name");
+                list.add(row);
+            }
+            return list;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
     }
 }
