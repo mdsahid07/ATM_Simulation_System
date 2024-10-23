@@ -6,11 +6,11 @@ public class Admin extends Role{
     Admin(String name,Integer ID){
         super(name,ID,ROLE_TYPE.ADMIN);
     }
-    public boolean delete_account(Integer ID){
-        return MainDAL.write("Delete from Account Where Id=" + ID);
+    public boolean delete_account(Integer AccNumber){
+        return MainDAL.write("Delete from Account Where AccNumber=" + AccNumber);
     }
-    public boolean add_account(User user,String pin){
-        return MainDAL.write(String.format("Insert into Account (Pin,Balance,Name,UserId) Values('%s',%f,'%s',%d)",pin,0.0,user.getName(),user.getID()));
+    public boolean add_account(String name,Integer Id){
+        return MainDAL.write(String.format("Insert into Account (Pin,Balance,Name,UserId) Values('%s',%f,'%s',%d)","0000",0.0,name,Id));
     }
 //    public boolean block_account(Integer ID){
 //        return true;
