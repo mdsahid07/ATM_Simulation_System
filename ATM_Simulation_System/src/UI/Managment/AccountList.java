@@ -2,7 +2,6 @@ package UI.Managment;
 
 import Business.Admin;
 import Business.SystemModel;
-import Business.User;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,6 +15,7 @@ import java.util.List;
 public class AccountList extends JFrame {
     private JTable table1;
     private JPanel panel1;
+    private JButton backButton;
     private JButton deleteButton;
     private int selectedRow;
 
@@ -57,18 +57,26 @@ public class AccountList extends JFrame {
                 }
             }
         });
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OptionsPage optionsPage = new OptionsPage();
+                optionsPage.setVisible(true);
+                dispose();
+            }
+        });
     }
     public  void getList()  {
-        List<Object[]> list =  SystemModel.getAccountList();
-        String[] columnNames = {"AccNumber","Balance","Name"};
-        Object[][] data = new Object[list.size()][3];
-
-        for(int i=0; i<list.size();i++){
-            data[i] = list.get(i);
-        }
-        DefaultTableModel model = new DefaultTableModel(data,columnNames);
-        System.out.println(data);
-        table1.setModel(model);
+//        List<Object[]> list =  SystemModel.getAccountList();
+//        String[] columnNames = {"AccNumber","Balance","Name"};
+//        Object[][] data = new Object[list.size()][3];
+//
+//        for(int i=0; i<list.size();i++){
+//            data[i] = list.get(i);
+//        }
+//        DefaultTableModel model = new DefaultTableModel(data,columnNames);
+//        System.out.println(data);
+//        table1.setModel(model);
 
     }
     public static void main(String[] args) {

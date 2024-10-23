@@ -1,7 +1,8 @@
 package UI;
 
+import Business.SystemModel;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +14,7 @@ public class MainWindow extends JFrame {
     private JButton changePinButton;
     private JPanel MainPanal;
     private JButton exitButton;
+    private JFrame frame;
 
     public MainWindow() {
         setContentPane(MainPanal);
@@ -35,8 +37,8 @@ public class MainWindow extends JFrame {
         withdrawCashButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// Create a new instance of the other form here
-
+                Withdraw settings = new Withdraw();
+                settings.setVisible(true);
                 dispose();
             }
         });
@@ -49,27 +51,37 @@ public class MainWindow extends JFrame {
             }
         });
         checkBalanceButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-// Create a new instance of the other form here
-
+                CheckBalance settings = new CheckBalance();
+                settings.setVisible(true);
                 dispose();
             }
         });
         changePinButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// Create a new instance of the other form here
-
+                Settings settings = new Settings();
+                settings.setVisible(true);
                 dispose();
             }
         });
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login =  new Login();
-                login.setVisible(true);
-                dispose();
+                // Login login =  new Login();
+                // login.setVisible(true);
+                //dispose();
+
+                if (SystemModel.Log_Out()) {
+                    JOptionPane.showMessageDialog(frame, "You have been logged out.");
+                    dispose();
+                    Login login = new Login();
+                    login.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Failed to log out.");
+                }
 
 
             }

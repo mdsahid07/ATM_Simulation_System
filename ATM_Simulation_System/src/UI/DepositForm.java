@@ -31,7 +31,6 @@ public class DepositForm extends JFrame {
         setLayout(new GridLayout(4, 2));
         setSize(400, 400);
         setLocationRelativeTo(null);
-        setVisible(true);
 
 
         // Add action listener for the add button
@@ -59,64 +58,33 @@ public class DepositForm extends JFrame {
 
     }
 
-
-
-
     private void makeDeposit() throws SQLException {
-        int accountNo;
-        double amount;
-
-        try {
-            accountNo = Integer.parseInt(accountTextField.getText());
-             amount = Double.parseDouble(amountTextField.getText());
-            if (amount<=0)
-            {
-                JOptionPane.showMessageDialog(null, "The amount must be greater than zero");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null,"Invalid account number");
-            return; // Handle error appropriately
-        }
+        int accountNo = Integer.valueOf(accountTextField.getText());
+        double amount = Double.valueOf(amountTextField.getText());
 
         String sql = "SELECT USERID FROM LOGINSESSION";
-        int id = 0;
-
-        try (ResultSet result = MainDAL.read(sql)) {
-            if (result.next()) {
-                id = result.getInt(1);
-            }
-        }
-
+        ResultSet reslut = MainDAL.read(sql);
+        int  id = 0;
         String name = "";
         int acc = 0;
-
-        sql = "SELECT NAME, ACCNUMBER FROM ACCOUNT WHERE USERID=? AND ACCNUMBER=?";
-        try (PreparedStatement pstmt = MainDAL.getConnection().prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.setInt(2, accountNo);
-
-            try (ResultSet result2 = pstmt.executeQuery()) {
-                if (result2.next()) {
-                    name = result2.getString(1);
-                    acc = result2.getInt(2);
-                }
-            }
-        }
-
-        if (acc == accountNo) {
-            User user = new User(name, id);
-            Account account = new Account(user, accountNo);
-            if(account.deposit(amount))
+        if (reslut.next()){
+            sql = "SELECT USER.ID, USER.NAME, ACCOUNT.ACCNUMBER FROM USER INNER JOIN ACCOUNT ON USER.ID  ACCOUNT.USERID"; // Change to your table and columns
+            ResultSet reslut2 =MainDAL.read(sql);
+            if(reslut2.next())
             {
-                new MainWindow();
-                dispose();
+                id = reslut2.getInt(1);
+                name = reslut2.getString(2);
+                acc = reslut2.getInt(3);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Account number does not match.");
         }
-    }
 
+        if (acc==accountNo) {
+            User user = new User(name, Integer.valueOf(id));
+            Account account = new Account(user, accountNo,0,"","");
+            account.deposit(amount);
+        }
+
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
