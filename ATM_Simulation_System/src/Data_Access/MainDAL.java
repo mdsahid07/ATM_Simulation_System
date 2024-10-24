@@ -61,7 +61,7 @@ public class MainDAL {
         try {
             ResultSet rs = read("SELECT LAST_INSERT_ID();");
             if (rs.next()) {
-                return rs.getInt(1);
+                return rs.getInt("Id");
             }
             return -1;  // Return -1 or handle the error case appropriately
         }catch(SQLException e){
