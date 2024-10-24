@@ -72,7 +72,7 @@ public class Account {
 
     public boolean deposit(double amount) throws SQLException {
         this.balance += amount;
-        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER==" + this.accountNumber; // Change to your table and columns
+        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER = " + this.accountNumber; // Change to your table and columns
         ResultSet reslut = MainDAL.read(sql);
         double lastBalance = 0.0;
         if (reslut.next())
@@ -80,7 +80,7 @@ public class Account {
 
         lastBalance += this.balance;
 
-        sql = "UPDATE account SET Balance = " + lastBalance + "WHERE ACCNUMBER==" + this.accountNumber; // Change to your table and columns
+        sql = "UPDATE account SET Balance = " + lastBalance + "WHERE ACCNUMBER = " + this.accountNumber; // Change to your table and columns
         if (MainDAL.write(sql)) {
             JOptionPane.showMessageDialog(null, "Money is successful deposited");
             addTransaction(TransactionType.DEPOSITE, amount);

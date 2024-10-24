@@ -1,10 +1,9 @@
 package UI.Managment;
 
 import Business.SystemModel;
-import UI.MainWindow;
+import UI.Login;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -14,6 +13,7 @@ public class OptionsPage extends  JFrame{
     private JButton userListButton;
     private JButton transactionsButton;
     private JPanel panel1;
+    private JButton logoutButton;
 
     public OptionsPage() {
         setContentPane(panel1);
@@ -38,7 +38,8 @@ public class OptionsPage extends  JFrame{
     transactionsButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            new TransactionList();
+            dispose();
         }
     });
         addWindowListener(new WindowAdapter() {
@@ -47,7 +48,15 @@ public class OptionsPage extends  JFrame{
                 SystemModel.Log_Out();
             }
         });
-}
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SystemModel.Log_Out();
+                new Login();
+                dispose();
+            }
+        });
+    }
     public static void main(String[] args) {
         new OptionsPage();
     }
