@@ -14,7 +14,7 @@ public class OptionsPage extends  JFrame{
     private JButton transactionsButton;
     private JPanel panel1;
     private JButton logoutButton;
-
+    private JFrame frame;
     public OptionsPage() {
         setContentPane(panel1);
         // Default visibility is false. You have enabled visibility true
@@ -42,20 +42,34 @@ public class OptionsPage extends  JFrame{
             dispose();
         }
     });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SystemModel.Log_Out()) {
+                    JOptionPane.showMessageDialog(frame, "You have been logged out.");
+
+                    Login login = new Login();
+                    login.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Failed to log out.");
+                }
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 SystemModel.Log_Out();
             }
         });
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SystemModel.Log_Out();
-                new Login();
-                dispose();
-            }
-        });
+//        logoutButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SystemModel.Log_Out();
+//                new Login();
+//              //  dispose();
+//            }
+//        });
     }
     public static void main(String[] args) {
         new OptionsPage();

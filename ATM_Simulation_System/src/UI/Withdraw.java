@@ -65,8 +65,8 @@ public class Withdraw {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainWindow settings = new MainWindow();
-                settings.setVisible(true);
+                ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                frame.setVisible(true);
                 frame.dispose(); // Close the window when Cancel is clicked
             }
         });

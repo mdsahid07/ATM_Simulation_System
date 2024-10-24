@@ -35,12 +35,46 @@ public class Admin extends Role {
         }
     }
 
+    public boolean checkUserName(String userName) {
+        try {
+            ResultSet set= MainDAL.read("SELECT Name FROM  User WHERE Name = '" + userName + "'");
+            if (set.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkSSN(String SSN) {
+        try {
+            ResultSet set= MainDAL.read("SELECT SSN FROM  Account WHERE SSN = '" + SSN + "'");
+            if (set.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkPhoneNumber(String phoneNumber) {
+        try {
+            ResultSet set= MainDAL.read("SELECT AccNumber FROM  Account WHERE Phone = '" + phoneNumber + "'");
+            if (set.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //    public boolean update_user(User user){
 //        return true;
 //    }
     public boolean delete_user(Integer ID) {
         System.out.println(ID);
-        MainDAL.write(String.format("Delete from Account Where UserId='%d'",ID));
+        MainDAL.write(String.format("Delete from Account Where UserId='%d'", ID));
         return MainDAL.write("Delete from User Where Id=" + ID);
     }
 //    public boolean update_account(){

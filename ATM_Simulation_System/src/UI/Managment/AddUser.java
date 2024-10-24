@@ -33,7 +33,8 @@ public class AddUser extends JFrame{
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+
+                new UserList();
             }
         });
         confrim.addActionListener(new ActionListener() {
@@ -47,7 +48,16 @@ public class AddUser extends JFrame{
                 if (name != null && address != null && phone != null) {
                     // Display the input back to the user
 //                    JOptionPane.showMessageDialog(null, "You entered: " + input);
-                    if(admin.add_user(name,SSN,address,phone)){
+                    if (admin.checkUserName(name)) {
+                        JOptionPane.showMessageDialog(null, "Name is already exist", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if (admin.checkSSN(SSN)) {
+                        JOptionPane.showMessageDialog(null, "SSN is already exist", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                   else if (admin.checkPhoneNumber(phone)) {
+                        JOptionPane.showMessageDialog(null, "Phone is already exist", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                   else if(admin.add_user(name,SSN,address,phone)){
                         JOptionPane.showMessageDialog(null, "Add Successfully", "Message", JOptionPane.PLAIN_MESSAGE);
                         dispose();
                         new UserList();
