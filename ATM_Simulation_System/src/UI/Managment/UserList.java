@@ -71,9 +71,6 @@ public class UserList extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if (selectedRow != -1) {
                     Account account = list.get(selectedRow);
-                    System.out.println(selectedRow);
-                    System.out.println(account.holderName);
-                    System.out.println(account.holderName.getID());
                     if (admin.delete_user(account.holderName.getID())){
                         getList();
                     }else{
