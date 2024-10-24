@@ -123,12 +123,12 @@ public class SystemModel {
             ResultSet query = MainDAL.read(String.format("Select * from Transaction"));
             int i=0;
             while (query.next()) {
-                Object[] row = new Object[3];
+                Object[] row = new Object[5];
                 row[0] = ++i;
                 row[1] = query.getString("TransactionType");
                 row[2] = query.getDate("Date");
                 row[3] = query.getDouble("Amount");
-                row[4] = query.getDouble("SenderAcc");
+                row[4] = query.getInt("SenderAcc");
 //                row[]
                 list.add(row);
             }

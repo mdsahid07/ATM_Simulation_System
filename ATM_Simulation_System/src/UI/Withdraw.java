@@ -105,7 +105,7 @@ public class Withdraw {
 
         // Successful withdrawal
         currentBalance -= withdrawAmount;
-        if (Account.withdraw(currentBalance)) {
+        if (Account.withdraw(withdrawAmount)) {
             JOptionPane.showMessageDialog(frame, "Withdrawal successful! New Balance: $" + currentBalance);
             ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(), AccountOperations.getAccountNumber());
             frame.setVisible(true);

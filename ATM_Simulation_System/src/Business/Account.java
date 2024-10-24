@@ -1,14 +1,9 @@
 package Business;
 
 import Data_Access.MainDAL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.*;
+
 import javax.swing.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +18,7 @@ public class Account {
     public String address;
     public String phone;
 
-    public Account(User holderName , int accountNumber,double balance,String address,String phone) {
+    public Account(User holderName, int accountNumber, double balance, String address, String phone) {
         this.accountNumber = accountNumber;
         this.holderName = holderName;
         this.address = address;
@@ -48,6 +43,7 @@ public class Account {
         try {
             int userId = 0;
             int accnumber = 0;
+            double balance = 0;
             ResultSet query = MainDAL.read("Select * from LoginSession");
             while (query.next()) {
                 userId = query.getInt("UserId");
@@ -55,11 +51,14 @@ public class Account {
             ResultSet query1 = MainDAL.read("Select * from Account where UserId = " + userId);
             while (query1.next()) {
                 accnumber = query1.getInt("AccNumber");
+                balance = query1.getDouble("Balance");
             }
-
-            String sql = "UPDATE account SET Balance = " + amount + " WHERE ACCNUMBER=" + accnumber; // Change to your table and columns
+            double newBalance = balance - amount;
+            String sql = "UPDATE account SET Balance = " + newBalance + " WHERE ACCNUMBER=" + accnumber; // Change to your table and columns
             if (MainDAL.write(sql)) {
                 //JOptionPane.showMessageDialog(null, "Money is successful withdrawal");
+                AccountOperations op = new AccountOperations();
+                op.addTransaction(AccountOperations.getAccountNumber(), AccountOperations.getAccountNumber(), TransactionType.WITHDRAWAL, amount);
                 return true;
             } else
                 return false;
@@ -71,22 +70,35 @@ public class Account {
 
 
     public boolean deposit(double amount) throws SQLException {
-        this.balance += amount;
-        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER=" + this.accountNumber; // Change to your table and columns
-        ResultSet reslut = MainDAL.read(sql);
-        double lastBalance = 0.0;
-        if (reslut.next())
-            lastBalance = reslut.getDouble(1);
+//        this.balance += amount;
+//        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER=" + this.accountNumber; // Change to your table and columns
+//        ResultSet reslut = MainDAL.read(sql);
+//        double lastBalance = 0.0;
+//        if (reslut.next())
+//            lastBalance = reslut.getDouble(1);
+//
+//        lastBalance += this.balance;
 
-        lastBalance += this.balance;
-
-        sql = "UPDATE account SET Balance = " + lastBalance + "WHERE ACCNUMBER=" + this.accountNumber; // Change to your table and columns
-        if (MainDAL.write(sql)) {
-            addTransaction(TransactionType.DEPOSITE, amount);
-
-            return true;
+        int userId = 0;
+        int accnumber = 0;
+        double balance = 0;
+        ResultSet query = MainDAL.read("Select * from LoginSession");
+        while (query.next()) {
+            userId = query.getInt("UserId");
         }
-        else
+        ResultSet query1 = MainDAL.read("Select * from Account where UserId = " + userId);
+        while (query1.next()) {
+            balance = query1.getDouble("Balance");
+        }
+        double newBalance = balance + amount;
+
+        String sql = "UPDATE account SET Balance = " + newBalance + "WHERE ACCNUMBER=" + AccountOperations.getAccountNumber(); // Change to your table and columns
+        if (MainDAL.write(sql)) {
+            //addTransaction(TransactionType.DEPOSITE, amount);
+            AccountOperations op = new AccountOperations();
+            op.addTransaction(AccountOperations.getAccountNumber(), AccountOperations.getAccountNumber(), TransactionType.DEPOSITE, amount);
+            return true;
+        } else
             return false;
 
     }
@@ -102,28 +114,26 @@ public class Account {
             receiver.deposit(amount);
             addTransaction(receiver, TransactionType.TRANSFER, amount);
             return true;
-        } else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "You do not have sufficient money to do withdrawal");
             return false;
         }
     }
 
-     boolean addTransaction(Account receiver, TransactionType type, double amount) {
+    public boolean addTransaction(Account receiver, TransactionType type, double amount) {
         if (transactions == null)
             transactions = new ArrayList<>();
 
         Transcation trans = new Transcation(this, receiver, type, amount);
         transactions.add(trans);
 
-        String sql = "INSERT INTO TRANSACTION (Amount,SenderAcc, ReceiverAcc, TransactionType) VALUES ("+amount+","+this.accountNumber+","+receiver.getAccountNumber()+",'"+type.toString()+"')";
+        String sql = "INSERT INTO TRANSACTION (Amount,SenderAcc, ReceiverAcc, TransactionType,UserId) VALUES (" + amount + "," + this.accountNumber + "," + receiver.getAccountNumber() + ",'" + type.toString() + "',"+AccountOperations.getUserId()+")";
 //        System.out.println(sql);
         if (MainDAL.write(sql)) {
 //            addTransaction(type, amount);
 
             return true;
-        }
-        else
+        } else
             return false;
 
     }
@@ -135,13 +145,16 @@ public class Account {
         Transcation trans = new Transcation(this, type, amount);
         transactions.add(trans);
     }
-    public int getAccountNumber(){
+
+    public int getAccountNumber() {
         return this.accountNumber;
     }
-    public double getBalanceDefault(){
+
+    public double getBalanceDefault() {
         return this.balance;
     }
-    public User getUser(){
+
+    public User getUser() {
         return this.holderName;
     }
 

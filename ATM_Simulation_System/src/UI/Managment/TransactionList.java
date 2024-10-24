@@ -38,8 +38,8 @@ public class TransactionList extends JFrame {
     }
     public  void getList()  {
         List<Object[]> list =  SystemModel.getTransactions();
-        String[] columnNames = {"Index" ,"TransactionType","Date","Amount","User"};
-        Object[][] data = new Object[list.size()][3];
+        String[] columnNames = {"Index" ,"TransactionType","Date","Amount","Account"};
+        Object[][] data = new Object[list.size()][5];
 
         for(int i=0; i<list.size();i++){
             data[i] = list.get(i);

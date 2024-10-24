@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddUser extends JFrame{
+public class AddUser extends JFrame {
     private JPanel panel1;
     private JTextField nameField;
     private JTextField AdressField;
@@ -50,18 +50,15 @@ public class AddUser extends JFrame{
 //                    JOptionPane.showMessageDialog(null, "You entered: " + input);
                     if (admin.checkUserName(name)) {
                         JOptionPane.showMessageDialog(null, "Name is already exist", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if (admin.checkSSN(SSN)) {
+                    } else if (admin.checkSSN(SSN)) {
                         JOptionPane.showMessageDialog(null, "SSN is already exist", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                   else if (admin.checkPhoneNumber(phone)) {
+                    } else if (admin.checkPhoneNumber(phone)) {
                         JOptionPane.showMessageDialog(null, "Phone is already exist", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                   else if(admin.add_user(name,SSN,address,phone)){
+                    } else if (admin.add_user(name, SSN, address, phone)) {
                         JOptionPane.showMessageDialog(null, "Add Successfully", "Message", JOptionPane.PLAIN_MESSAGE);
                         dispose();
                         new UserList();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Add Error", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
@@ -71,6 +68,7 @@ public class AddUser extends JFrame{
             }
         });
     }
+
     public static void main(String[] args) {
         new AddUser();
     }
