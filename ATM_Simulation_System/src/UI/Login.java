@@ -67,7 +67,7 @@ public class Login extends JFrame {
 
 
 
-//        MainDAL.write("DELETE FROM LOGINSESSION");
+        MainDAL.write("DELETE FROM LOGINSESSION");
 
         frame = new JFrame("ATM - Login");
         frame.setSize(400, 300);
