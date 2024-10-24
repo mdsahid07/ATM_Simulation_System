@@ -26,7 +26,7 @@ public class ATMWelcomePage {
     private void initialize() {
         // Create the main frame
         frame = new JFrame("ATM - Welcome");
-        frame.setSize(400, 500);
+        frame.setSize(400, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // Center the frame
         frame.setLayout(null); // Use absolute layout for custom positions
@@ -58,19 +58,27 @@ public class ATMWelcomePage {
         depositButton.setBounds(120, 220, 150, 30);
         frame.add(depositButton);
 
-        // Change PIN button
-        JButton changePinButton = new JButton("Change PIN");
-        changePinButton.setBounds(120, 270, 150, 30);
-        frame.add(changePinButton);
 
         // Change PIN button
         JButton transferButton = new JButton("Transfer Money");
-        transferButton.setBounds(120, 320, 150, 30);
+        transferButton.setBounds(120, 270, 150, 30);
         frame.add(transferButton);
+
+
+        // Change PIN button
+        JButton statementButton = new JButton("Mini Statement");
+        statementButton.setBounds(120, 320, 150, 30);
+        frame.add(statementButton);
+
+
+        // Change PIN button
+        JButton changePinButton = new JButton("Change PIN");
+        changePinButton.setBounds(120, 370, 150, 30);
+        frame.add(changePinButton);
 
         // Logout button
         JButton logoutButton = new JButton("Logout");
-        logoutButton.setBounds(120, 370, 150, 30);
+        logoutButton.setBounds(120, 420, 150, 30);
         frame.add(logoutButton);
 
         // ActionListener for the Balance Inquiry button
@@ -103,8 +111,8 @@ public class ATMWelcomePage {
         depositButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DepositForm settings = new DepositForm();
-                settings.setVisible(true);
+                DepositNew settings = new DepositNew();
+                frame.setVisible(true);
                 frame.dispose();
             }
         });
@@ -123,8 +131,18 @@ public class ATMWelcomePage {
         transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransferForm settings = new TransferForm();
-                settings.setVisible(true);
+                TransferNew settings = new TransferNew();
+                frame.setVisible(true);
+                frame.dispose();
+            }
+        });
+
+        // ActionListener for the Change PIN button
+        statementButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MiniStatement settings = new MiniStatement();
+                frame.setVisible(true);
                 frame.dispose();
             }
         });
