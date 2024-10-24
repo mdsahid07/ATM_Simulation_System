@@ -51,8 +51,8 @@ public class TransferForm extends JFrame{
         double amount;
 
         try {
-            fromAccountNo = Integer.parseInt(accountTextField.getText());
-            toAccountNo = Integer.parseInt(accountTextField.getText());
+            fromAccountNo = Integer.parseInt(FromAccountTextField.getText());
+            toAccountNo = Integer.parseInt(ToAccountTextField.getText());
             amount = Double.parseDouble(amountTextField.getText());
             if (amount<=0)
             {
@@ -73,27 +73,53 @@ public class TransferForm extends JFrame{
             }
         }
 
-        String name = "";
-        int acc = 0;
+        String senderName = "";
+        int senderAccountNo = 0;
+        double balance = 0.0;
 
-        sql = "SELECT NAME, ACCNUMBER FROM ACCOUNT WHERE USERID=? AND ACCNUMBER=?";
+        sql = "SELECT NAME, ACCNUMBER, BALANCE FROM ACCOUNT WHERE USERID=? AND ACCNUMBER=?";
         try (PreparedStatement pstmt = MainDAL.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
-            pstmt.setInt(2, accountNo);
+            pstmt.setInt(2, fromAccountNo);
 
             try (ResultSet result2 = pstmt.executeQuery()) {
                 if (result2.next()) {
-                    name = result2.getString(1);
-                    acc = result2.getInt(2);
+                    senderName = result2.getString(1);
+                    senderAccountNo = result2.getInt(2);
+                    balance = result2.getInt(3);
                 }
             }
         }
 
-        if (acc == accountNo) {
-            User user = new User(name, id);
-            Account account = new Account(user, accountNo);
-            if(account.deposit(amount))
+        String receiverName = "";
+        int receiverAccountNo = 0;
+
+
+        sql = "SELECT NAME, ACCNUMBER FROM ACCOUNT WHERE ACCNUMBER=?";
+        try (PreparedStatement pstmt = MainDAL.getConnection().prepareStatement(sql)) {
+
+            pstmt.setInt(1, toAccountNo);
+
+            try (ResultSet result3 = pstmt.executeQuery()) {
+                if (result3.next()) {
+                    receiverName = result3.getString(1);
+                    receiverAccountNo = result3.getInt(2);
+                }
+            }
+        }
+
+
+        if (balance >0 &&  receiverAccountNo!=0) {
+            User sender = new User(senderName, id);
+            Account senderAccount = new Account(sender, fromAccountNo,0,"","");
+
+            User receiver  = new User(senderName, id);
+            Account receiverAccount = new Account(receiver, fromAccountNo,0,"","");
+
+
+            if(senderAccount.withdraw(amount) && receiverAccount.deposit(amount))
             {
+                JOptionPane.showMessageDialog(null, "Your transaction is successful.");
                 new MainWindow();
                 dispose();
             }

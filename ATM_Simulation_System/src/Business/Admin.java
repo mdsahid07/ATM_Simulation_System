@@ -9,7 +9,7 @@ public class Admin extends Role{
     public boolean delete_account(Integer AccNumber){
         return MainDAL.write("Delete from Account Where AccNumber=" + AccNumber);
     }
-//    public boolean add_account(String name,Integer Id){
+//    public boolean add_account(String name, IdInteger){
 //        return MainDAL.write(String.format("Insert into Account (Pin,Balance,Name,UserId) Values('%s',%f,'%s',%d)","0000",0.0,name,Id));
 //    }
 //    public boolean block_account(Integer ID){
@@ -17,7 +17,7 @@ public class Admin extends Role{
 //    }
     public boolean add_user(String name,String SSN,String address,String phone){
         MainDAL.write(String.format("Insert into User (Name,Password,UserType) Values ('%s','%s','%s')",name,"123456",ROLE_TYPE.USER.toString()));
-        int Id = MainDAL.getLastInsertId();
+        //int Id = MainDAL.getLastInsertId();
         return MainDAL.write(String.format("Insert into Account (Pin,Balance,Name,UserId,SSN,Address,Phone) Values('%s',%f,'%s',%d,'%s','%s','%s')","0000",0.0,name,Id,SSN,address,phone));
     }
 //    public boolean update_user(User user){
