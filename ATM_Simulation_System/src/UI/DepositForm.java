@@ -53,7 +53,7 @@ public class DepositForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
 
-                frame.dispose(); // Close this window
+                dispose(); // Close this window
             }
         });
 

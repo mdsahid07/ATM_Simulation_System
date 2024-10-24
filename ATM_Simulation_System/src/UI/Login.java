@@ -125,11 +125,13 @@ public class Login extends JFrame {
                     Role role = sm.VerifyLogin(username, passwordStr);
                     if(role.getType() == ROLE_TYPE.ADMIN){
                         new OptionsPage();
+                        dispose();
                     }else{
                         JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         uname.setText("");
                         password.setText("");
                         new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                        dispose();
                     }
                 }
 //                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {
