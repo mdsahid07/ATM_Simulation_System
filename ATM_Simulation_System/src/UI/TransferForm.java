@@ -19,6 +19,7 @@ public class TransferForm extends JFrame{
     private JTextField FromAccountTextField;
     private JTextField amountTextField;
     private JButton transferButton;
+    private JButton cancelButton;
 
     public TransferForm() {
         setContentPane(MainPanel);
@@ -37,6 +38,14 @@ public class TransferForm extends JFrame{
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+
+                dispose(); // Close this window
             }
         });
     }

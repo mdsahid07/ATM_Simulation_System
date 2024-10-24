@@ -52,8 +52,8 @@ public class DepositForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
-                frame.setVisible(true);
-                frame.dispose(); // Close this window
+
+                dispose(); // Close this window
             }
         });
 
