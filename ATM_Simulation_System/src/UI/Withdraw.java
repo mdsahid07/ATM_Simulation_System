@@ -1,6 +1,7 @@
 package UI;
 
 import Business.Account;
+import Business.AccountOperations;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,15 +105,14 @@ public class Withdraw {
 
         // Successful withdrawal
         currentBalance -= withdrawAmount;
-        if (Account.withdraw(currentBalance)){
+        if (Account.withdraw(currentBalance)) {
             JOptionPane.showMessageDialog(frame, "Withdrawal successful! New Balance: $" + currentBalance);
-            MainWindow settings = new MainWindow();
-            settings.setVisible(true);
-            frame.dispose(); // Close the window after success
-        }
-        else {
+            ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(), AccountOperations.getAccountNumber());
+            frame.setVisible(true);
+            frame.dispose();
+        } else {
             JOptionPane.showMessageDialog(frame, "Withdrawal Failed", "Error", JOptionPane.ERROR_MESSAGE);
-           // frame.dispose(); // Close the window after success
+            // frame.dispose(); // Close the window after success
         }
 
 

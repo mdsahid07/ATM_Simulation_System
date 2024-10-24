@@ -1,5 +1,6 @@
 package UI;
 
+import Business.AccountOperations;
 import Business.ROLE_TYPE;
 import Business.Role;
 import Business.SystemModel;
@@ -128,7 +129,7 @@ public class Login extends JFrame {
                         JOptionPane.showMessageDialog(null, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         uname.setText("");
                         password.setText("");
-                        new MainWindow();
+                        new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
                     }
                 }
 //                else if (username.equals("admin") && Arrays.equals(pwd,"admin123".toCharArray())) {

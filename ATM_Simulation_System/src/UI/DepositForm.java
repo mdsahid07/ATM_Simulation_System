@@ -1,6 +1,7 @@
 package UI;
 
 import Business.Account;
+import Business.AccountOperations;
 import Business.SessionManager;
 import Business.User;
 import Data_Access.MainDAL;
@@ -14,6 +15,7 @@ import java.sql.*;
 import static javax.swing.UIManager.getString;
 
 public class DepositForm extends JFrame {
+    private JFrame frame;
     private JPanel MainPanel;
     private JTextField accountTextField;
     private JTextField amountTextField;
@@ -49,9 +51,9 @@ public class DepositForm extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.setVisible(true);
-                dispose(); // Close this window
+                ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                frame.setVisible(true);
+                frame.dispose(); // Close this window
             }
         });
 

@@ -116,12 +116,14 @@ public class SystemModel {
         try {
             List<Object[]> list = new ArrayList<>();
             ResultSet query = MainDAL.read(String.format("Select * from Transaction"));
+            int i=0;
             while (query.next()) {
                 Object[] row = new Object[3];
-                row[0] = query.getInt("Id");
+                row[0] = ++i;
                 row[1] = query.getString("TransactionType");
                 row[2] = query.getDate("Date");
                 row[3] = query.getDouble("Amount");
+                row[4] = query.getDouble("SenderAcc");
 //                row[]
                 list.add(row);
             }
@@ -129,6 +131,5 @@ public class SystemModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

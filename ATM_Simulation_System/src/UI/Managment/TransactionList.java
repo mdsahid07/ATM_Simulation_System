@@ -5,11 +5,14 @@ import Business.SystemModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class TransactionList extends JFrame {
     private JPanel panel1;
     private JTable table1;
+    private JButton backButton;
 
     TransactionList(){
         setContentPane(panel1);
@@ -25,10 +28,17 @@ public class TransactionList extends JFrame {
         setResizable(false);// If you wish
         getList();
 
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new OptionsPage();
+                dispose();
+            }
+        });
     }
     public  void getList()  {
         List<Object[]> list =  SystemModel.getTransactions();
-        String[] columnNames = {"AccNumber","Balance","Name"};
+        String[] columnNames = {"Index" ,"TransactionType","Date","Amount","User"};
         Object[][] data = new Object[list.size()][3];
 
         for(int i=0; i<list.size();i++){
@@ -47,7 +57,7 @@ public class TransactionList extends JFrame {
  */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AccountList mf = new AccountList();
+                new TransactionList();
             }
         });
     }
