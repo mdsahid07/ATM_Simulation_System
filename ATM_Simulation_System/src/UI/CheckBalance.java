@@ -1,6 +1,7 @@
 package UI;
 
 import Business.Account;
+import Business.AccountOperations;
 import Business.SystemModel;
 
 import javax.swing.*;
@@ -65,9 +66,9 @@ public class CheckBalance extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainWindow settings = new MainWindow();
-                settings.setVisible(true);
-                dispose();
+                ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                frame.setVisible(true);
+                frame.dispose();
             }
         });
 

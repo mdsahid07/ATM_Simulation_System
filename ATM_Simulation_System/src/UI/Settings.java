@@ -130,8 +130,9 @@ public class Settings extends JFrame {
                     JOptionPane.showMessageDialog(null, "Pin changed successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     newPin.setText("");
                     confirmPin.setText("");
-                    dispose();
-                    new MainWindow();
+                    ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                    frame.setVisible(true);
+                    frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -142,7 +143,10 @@ public class Settings extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose(); // Close the window when Cancel is clicked
+                ATMWelcomePage settings = new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
+                frame.setVisible(true);
+                frame.dispose();
+                 // Close the window when Cancel is clicked
             }
         });
 
