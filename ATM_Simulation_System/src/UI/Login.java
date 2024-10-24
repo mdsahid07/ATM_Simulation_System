@@ -3,6 +3,7 @@ package UI;
 import Business.ROLE_TYPE;
 import Business.Role;
 import Business.SystemModel;
+import Data_Access.MainDAL;
 import UI.Managment.OptionsPage;
 
 import javax.swing.*;
@@ -63,6 +64,9 @@ public class Login extends JFrame {
         */
 
 
+
+
+//        MainDAL.write("DELETE FROM LOGINSESSION");
 
         frame = new JFrame("ATM - Login");
         frame.setSize(400, 300);

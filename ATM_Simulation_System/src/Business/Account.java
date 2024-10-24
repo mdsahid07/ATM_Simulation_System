@@ -117,7 +117,7 @@ public class Account {
         transactions.add(trans);
 
         String sql = "INSERT INTO TRANSACTION (Amount,SenderAcc, ReceiverAcc, TransactionType) VALUES ("+amount+","+this.accountNumber+","+receiver.getAccountNumber()+",'"+type.toString()+"')";
-        System.out.println(sql);
+//        System.out.println(sql);
         if (MainDAL.write(sql)) {
 //            addTransaction(type, amount);
 
