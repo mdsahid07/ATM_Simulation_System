@@ -1,6 +1,7 @@
 package UI;
 
 import Business.Account;
+import Business.AccountOperations;
 import Business.User;
 import Data_Access.MainDAL;
 
@@ -125,7 +126,7 @@ public class TransferForm extends JFrame{
             {
 
                 JOptionPane.showMessageDialog(null, "Your transaction is successful.");
-                new MainWindow();
+                new ATMWelcomePage(AccountOperations.getUserName(),AccountOperations.getAccountNumber());
                 dispose();
             }
         } else {

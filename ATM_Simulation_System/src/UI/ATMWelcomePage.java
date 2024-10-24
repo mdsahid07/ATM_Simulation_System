@@ -123,9 +123,9 @@ public class ATMWelcomePage {
         transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Navigate to Change PIN page
-                JOptionPane.showMessageDialog(frame, "Navigating to transfer page...");
-                // Open the actual Change PIN form here
+                TransferForm settings = new TransferForm();
+                settings.setVisible(true);
+                frame.dispose();
             }
         });
 
