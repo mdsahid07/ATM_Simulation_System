@@ -21,7 +21,7 @@ public class OptionsPage extends  JFrame{
         setVisible(true);
         // Terminates the Application when the frame is closed.
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Account List");
+        setTitle("ADMIN");
         // Provide the frame width and height
         setSize(500, 500);
         // Make your screen center
