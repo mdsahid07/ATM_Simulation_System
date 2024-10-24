@@ -9,7 +9,7 @@ import java.sql.*;
 public class MainDAL {
     public static void main(String[] args) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
+            Connection con = getConnection();
             Statement statement = con.createStatement();
             ResultSet query = statement.executeQuery("Select * from User");
 
@@ -25,7 +25,7 @@ public class MainDAL {
     }
     public static ResultSet read(String sql){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
+            Connection con = getConnection();
             Statement statement = con.createStatement();
             ResultSet query = statement.executeQuery(sql);
             return query;
@@ -40,7 +40,7 @@ public class MainDAL {
     public static boolean write(String sql){
         try {
             // Establish a connection to the database
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
+            Connection con = getConnection();
 
             // Create a statement object to execute the query
             Statement statement = con.createStatement();
@@ -57,17 +57,16 @@ public class MainDAL {
             return false;
         }
     }
-    public static int getLastInsertId() {
+    public static Connection getConnection() {
+        Connection con = null;
         try {
-            ResultSet rs = read("SELECT LAST_INSERT_ID();");
-            if (rs.next()) {
-                return rs.getInt("Id");
+                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
             }
-            return -1;  // Return -1 or handle the error case appropriately
-        }catch(SQLException e){
-            e.printStackTrace();
-            return -1;
-        }
+        catch (SQLException e) {
+                // If an exception occurs, print the error and return false
+                e.printStackTrace();
+            }
+        return con;
     }
 
 }
