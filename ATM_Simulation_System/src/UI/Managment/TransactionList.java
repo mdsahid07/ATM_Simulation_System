@@ -47,7 +47,6 @@ public class TransactionList extends JFrame {
  */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AccountList mf = new AccountList();
             }
         });
     }
