@@ -63,25 +63,33 @@ public class DepositForm extends JFrame {
         double amount = Double.valueOf(amountTextField.getText());
 
         String sql = "SELECT USERID FROM LOGINSESSION";
-        ResultSet reslut = MainDAL.read(sql);
         int  id = 0;
+
+        try (ResultSet result = MainDAL.read(sql)) {
+            if (result.next()) {
+                id = result.getInt(1);
+            }
+        }
+
         String name = "";
         int acc = 0;
-        if (reslut.next()){
-            sql = "SELECT USER.ID, USER.NAME, ACCOUNT.ACCNUMBER FROM USER INNER JOIN ACCOUNT ON USER.ID  ACCOUNT.USERID"; // Change to your table and columns
-            ResultSet reslut2 =MainDAL.read(sql);
+
+        sql = "SELECT NAME, ACCNUMBER FROM ACCOUNT WHERE  USERID="+id; // Change to your table and columns
+        try(ResultSet reslut2 =MainDAL.read(sql)) {
+
             if(reslut2.next())
             {
-                id = reslut2.getInt(1);
-                name = reslut2.getString(2);
-                acc = reslut2.getInt(3);
+                name = reslut2.getString(1);
+                acc = reslut2.getInt(2);
             }
         }
 
         if (acc==accountNo) {
             User user = new User(name, Integer.valueOf(id));
             Account account = new Account(user, accountNo,0,"","");
-            account.deposit(amount);
+            if(account.deposit(amount))
+                JOptionPane.showMessageDialog(null, "Money is successful deposited");
+
         }
 
     }

@@ -72,7 +72,7 @@ public class Account {
 
     public boolean deposit(double amount) throws SQLException {
         this.balance += amount;
-        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER==" + this.accountNumber; // Change to your table and columns
+        String sql = "SELECT BALANCE FROM account WHERE ACCNUMBER=" + this.accountNumber; // Change to your table and columns
         ResultSet reslut = MainDAL.read(sql);
         double lastBalance = 0.0;
         if (reslut.next())
@@ -80,9 +80,8 @@ public class Account {
 
         lastBalance += this.balance;
 
-        sql = "UPDATE account SET Balance = " + lastBalance + "WHERE ACCNUMBER==" + this.accountNumber; // Change to your table and columns
+        sql = "UPDATE account SET Balance = " + lastBalance + "WHERE ACCNUMBER=" + this.accountNumber; // Change to your table and columns
         if (MainDAL.write(sql)) {
-            JOptionPane.showMessageDialog(null, "Money is successful deposited");
             addTransaction(TransactionType.DEPOSITE, amount);
 
             return true;
@@ -97,24 +96,39 @@ public class Account {
     }
 
     public boolean transfer(Account receiver, double amount) throws SQLException {
-        if (amount <= balance) {
+        if (amount > balance) {
             balance -= amount;
+            withdraw(amount);
             receiver.deposit(amount);
             addTransaction(receiver, TransactionType.TRANSFER, amount);
             return true;
         } else
+        {
+            JOptionPane.showMessageDialog(null, "You do not have sufficient money to do withdrawal");
             return false;
+        }
     }
 
-    void addTransaction(Account receiver, TransactionType type, double amount) {
+     boolean addTransaction(Account receiver, TransactionType type, double amount) {
         if (transactions == null)
             transactions = new ArrayList<>();
 
         Transcation trans = new Transcation(this, receiver, type, amount);
         transactions.add(trans);
+
+        String sql = "INSERT INTO TRANSACTION (Amount,SenderAcc, ReceiverAcc, TransactionType) VALUES ("+amount+","+this.accountNumber+","+receiver.getAccountNumber()+",'"+type.toString()+"')";
+        System.out.println(sql);
+        if (MainDAL.write(sql)) {
+//            addTransaction(type, amount);
+
+            return true;
+        }
+        else
+            return false;
+
     }
 
-    void addTransaction(TransactionType type, double amount) {
+    public void addTransaction(TransactionType type, double amount) {
         if (transactions == null)
             transactions = new ArrayList<>();
 

@@ -114,11 +114,16 @@ public class TransferForm extends JFrame{
             Account senderAccount = new Account(sender, fromAccountNo,0,"","");
 
             User receiver  = new User(senderName, id);
-            Account receiverAccount = new Account(receiver, fromAccountNo,0,"","");
+            Account receiverAccount = new Account(receiver, toAccountNo,0,"","");
+
+//            System.out.println(senderAccount.getAccountNumber());
+//            System.out.println(receiverAccount.getAccountNumber());
 
 
-            if(senderAccount.withdraw(amount) && receiverAccount.deposit(amount))
+            // if(senderAccount.withdraw(amount) && receiverAccount.deposit(amount))
+            if(senderAccount.transfer(receiverAccount, amount))
             {
+
                 JOptionPane.showMessageDialog(null, "Your transaction is successful.");
                 new MainWindow();
                 dispose();
