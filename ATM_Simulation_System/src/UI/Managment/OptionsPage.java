@@ -1,10 +1,9 @@
 package UI.Managment;
 
 import Business.SystemModel;
-import UI.MainWindow;
+import UI.Login;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -14,7 +13,8 @@ public class OptionsPage extends  JFrame{
     private JButton userListButton;
     private JButton transactionsButton;
     private JPanel panel1;
-
+    private JButton logoutButton;
+    private JFrame frame;
     public OptionsPage() {
         setContentPane(panel1);
         // Default visibility is false. You have enabled visibility true
@@ -41,6 +41,20 @@ public class OptionsPage extends  JFrame{
 
         }
     });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SystemModel.Log_Out()) {
+                    JOptionPane.showMessageDialog(frame, "You have been logged out.");
+
+                    Login login = new Login();
+                    login.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Failed to log out.");
+                }
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

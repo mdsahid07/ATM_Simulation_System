@@ -24,6 +24,11 @@ public class SystemModel {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/atmsystem", "root", "123456");
             Statement statement = con.createStatement();
+            ResultSet query1 = statement.executeQuery("Select * from LoginSession");
+            while (query1.next()) {
+                MainDAL.write("Delete from LoginSession where UserId = '" + query1.getInt("UserId") + "'");
+            }
+
             ResultSet query = statement.executeQuery("Select * from User");
 
             while (query.next()) {
